@@ -1,0 +1,23 @@
+import datetime
+
+from django.shortcuts import render
+from django.views.generic import View
+from django.core import serializers
+
+from common.render import json_response
+from scheduling.models import RecurringScheduledSession, OneTimeScheduledSession
+from scheduling.schemas import RecurringScheduledSessionSchema, OneTimeScheduledSessionSchema
+
+
+class OneWeekScheduleView(View):
+
+    def get(self, request, configuration_id):
+        recurring_sessions = RecurringScheduledSession.objects.filter(schedule_config_id=configuration_id)
+        one_time_scheduled_sessions = OneTimeScheduledSession.objects.filter(
+            schedule_config_id=configuration_id,
+            date__gte=datetime.date.today(),
+            date__lte=datetime.date.today() + datetime.timedelta(days=7),
+        )
+        session_list = RecurringScheduledSessionSchema(many=True).dump(recurring_sessions) + OneTimeScheduledSessionSchema(many=True).dump(one_time_scheduled_sessions)
+        session_list.sort(key=lambda x: x['date'])
+        return json_response(session_list)
