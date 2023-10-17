@@ -15,7 +15,7 @@ class RecurringScheduledSession(models.Model):
 
     @property
     def type(self):
-        return 'recurring'
+        return 'recurring_scheduled_session'
 
 
 class OneTimeScheduledSession(models.Model):
@@ -26,4 +26,4 @@ class OneTimeScheduledSession(models.Model):
 
     @property
     def type(self):
-        return 'one-time'
+        return 'one_time_scheduled_session'
