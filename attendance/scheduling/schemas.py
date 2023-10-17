@@ -2,6 +2,8 @@ import datetime
 
 from marshmallow import Schema, fields
 
+from attendees.schemas import AttendeeSchema
+
 
 class RecurringScheduledSessionSchema(Schema):
     id = fields.Int(dump_only=True)
@@ -10,6 +12,10 @@ class RecurringScheduledSessionSchema(Schema):
     time = fields.Time()
     date = fields.Method('get_date')
     type = fields.Str()
+    attendees = fields.Method('get_attendees', dump_only=True)
+
+    def get_attendees(self, obj):
+        return AttendeeSchema(many=True).dump(obj.attendees.all())
 
     def get_date(self, obj):
         today = datetime.date.today()

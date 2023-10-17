@@ -19,7 +19,7 @@ class RecurringScheduledSessionFactory(factory.DjangoModelFactory):
 
     name = 'Training Session'
     day = constants.MONDAY
-    time = datetime.datetime.now()
+    time = datetime.datetime.now().time()
     schedule_config = factory.SubFactory(ScheduleConfigurationFactory)
 
 
@@ -29,6 +29,6 @@ class OneTimeScheduledSessionFactory(factory.DjangoModelFactory):
         model = OneTimeScheduledSession
 
     name = 'Special Training Session'
-    time = datetime.datetime.now()
+    time = datetime.datetime.now().time()
     schedule_config = factory.SubFactory(ScheduleConfigurationFactory)
     date = datetime.date.today()
