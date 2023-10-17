@@ -15,7 +15,9 @@ class RecurringScheduledSessionSchema(Schema):
     attendees = fields.Method('get_attendees', dump_only=True)
 
     def get_attendees(self, obj):
-        return AttendeeSchema(many=True).dump(obj.attendees.all())
+        return AttendeeSchema(many=True).dump(obj.attendees.filter(
+            session_date__gte=datetime.date.today()
+        ))
 
     def get_date(self, obj):
         today = datetime.date.today()
