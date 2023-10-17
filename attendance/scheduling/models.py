@@ -13,6 +13,9 @@ class RecurringScheduledSession(models.Model):
     time = models.TimeField()
     schedule_config = models.ForeignKey(ScheduleConfiguration, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return '{} at {}'.format(self.get_day_display(), self.time)
+
     @property
     def type(self):
         return 'recurring_scheduled_session'
@@ -23,6 +26,9 @@ class OneTimeScheduledSession(models.Model):
     time = models.TimeField()
     schedule_config = models.ForeignKey(ScheduleConfiguration, on_delete=models.CASCADE)
     date = models.DateField()
+
+    def __str__(self):
+        return '{} at {}'.format(self.date, self.time)
 
     @property
     def type(self):
