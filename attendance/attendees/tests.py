@@ -1,10 +1,36 @@
-import datetime
+import datetime, json
 import factories
 
 from marshmallow import ValidationError
 from django.test import TestCase
+from django.urls import reverse
 
 from attendees.schemas import AttendeeSchema
+from attendees.models import Attendee
+
+
+class AttendeeViewTestCase(TestCase):
+
+    def setUp(self):
+        self.session = factories.RecurringScheduledSessionFactory()
+        self.url = reverse('attendees')
+        self.data = {
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'session_date': '2023-10-15',
+            'recurring_scheduled_session': self.session.pk
+        }
+
+    def test_good_request(self):
+        response = self.client.post(self.url, json.dumps(self.data), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        attendee = Attendee.objects.get(pk=data['attendee']['id'])
+
+        self.assertEqual(attendee.first_name, 'John')
+        self.assertEqual(attendee.last_name, 'Doe')
+        self.assertEqual(attendee.session_date, datetime.date(2023, 10, 15))
+        self.assertEqual(attendee.recurring_scheduled_session, self.session)
 
 
 class AttendeeSchemaTestCase(TestCase):

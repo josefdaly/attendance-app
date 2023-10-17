@@ -1,3 +1,4 @@
 django==4.2.6
 marshmallow
 factory-boy==2.8.1
+ipdb
