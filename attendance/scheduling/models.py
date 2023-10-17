@@ -13,9 +13,17 @@ class RecurringScheduledSession(models.Model):
     time = models.TimeField()
     schedule_config = models.ForeignKey(ScheduleConfiguration, on_delete=models.CASCADE)
 
+    @property
+    def type(self):
+        return 'recurring'
+
 
 class OneTimeScheduledSession(models.Model):
     name = models.CharField(max_length=255)
     time = models.TimeField()
     schedule_config = models.ForeignKey(ScheduleConfiguration, on_delete=models.CASCADE)
     date = models.DateField()
+
+    @property
+    def type(self):
+        return 'one-time'
