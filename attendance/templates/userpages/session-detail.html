@@ -1,0 +1,32 @@
+{% extends "./base.html" %}
+
+{% block content %}
+  <div id={{session.id}} type={{session.type}}>
+    <h2>{{ session.name }}</h2>
+    <p> {{ session.day }} at {{ session.time }} </p>
+    <p> {{ session.attendees|length }} people are attending </p>
+  </div>
+  <h3>Attendees</h3>
+  <ul>
+    {% for attendee in session.attendees %}
+      <li id={{attendee.id}}>
+        <p>{{attendee.first_name}} {{attendee.last_name}}</p>
+      </li>
+    {% endfor %}
+  </ul>
+  <h4>Sign Up</h4>
+  <form class="" action="/sessions/{{session.id}}/{{session.type}}/" method="post">
+    {% csrf_token %}
+    <label for="first_name">First Name</label>
+    <input type="text" name="first_name" id="first_name" />
+
+    <label for="last_name">Last Name</label>
+    <input type="text" name="last_name" id="last_name" />
+
+    <input type="hidden" name="session_date" value={{session.date}} />
+
+    <input type="hidden" name={{session.type}} value={{session.id}} />
+
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}
