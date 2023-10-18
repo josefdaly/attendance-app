@@ -8,7 +8,7 @@ from django.core import serializers
 
 from attendees.schemas import AttendeeSchema
 from common.render import json_response
-from scheduling.models import RecurringScheduledSession, OneTimeScheduledSession
+from scheduling.models import RecurringScheduledSession, OneTimeScheduledSession, ScheduleConfiguration
 from scheduling.schemas import RecurringScheduledSessionSchema, OneTimeScheduledSessionSchema
 from scheduling import constants
 
@@ -16,6 +16,7 @@ from scheduling import constants
 class ScheduleListView(View):
 
     def get(self, request, configuration_id):
+        config = ScheduleConfiguration.objects.get(pk=configuration_id)
         recurring_sessions = RecurringScheduledSession.objects.filter(schedule_config_id=configuration_id).prefetch_related('attendees')
         one_time_scheduled_sessions = OneTimeScheduledSession.objects.filter(
             schedule_config_id=configuration_id,
@@ -27,7 +28,7 @@ class ScheduleListView(View):
 
         template = loader.get_template("userpages/schedules.html")
 
-        return HttpResponse(template.render({'sessions': session_list}, request))
+        return HttpResponse(template.render({'sessions': session_list, 'name': config.name}, request))
 
 
 class ScheduleDetailView(View):
