@@ -3,3 +3,4 @@ marshmallow
 factory-boy==2.8.1
 ipdb
 dj-database-url
+gunicorn
