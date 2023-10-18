@@ -48,14 +48,14 @@ class ScheduleDetailView(View):
         session = session_cls.objects.get(pk=session_id)
         return session_serializer().dump(session)
 
-    def get(self, request, session_id, session_type):
+    def get(self, request, configuration_id, session_id, session_type):
         session_data = self._get_session_data(session_id, session_type)
 
         template = loader.get_template("userpages/session-detail.html")
 
         return HttpResponse(template.render({'session': session_data}, request))
 
-    def post(self, request, session_id, session_type):
+    def post(self, request, configuration_id, session_id, session_type):
         data = json.loads(json.dumps(request.POST))
         data.pop('csrfmiddlewaretoken')
         attendee = AttendeeSchema().load(data)

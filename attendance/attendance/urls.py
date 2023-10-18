@@ -28,5 +28,5 @@ urlpatterns = [
     path('api/attendees/', attendee_views.AttendeeView.as_view(), name='attendees'),
     # User Application Views
     path('schedules/<configuration_id>/', user_views.ScheduleListView.as_view()),
-    path('sessions/<session_id>/<session_type>/', user_views.ScheduleDetailView.as_view()),
+    path('schedules/<configuration_id>/sessions/<session_id>/<session_type>/', user_views.ScheduleDetailView.as_view()),
 ]

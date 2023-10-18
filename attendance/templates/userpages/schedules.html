@@ -4,7 +4,7 @@
     <h1>{{ name }}</h1>
     <ul>
       {% for session in sessions %}
-        <a href="/sessions/{{session.id}}/{{session.type}}">
+        <a href="sessions/{{session.id}}/{{session.type}}">
           <li id={{session.id}} type={{session.type}} >
             <h2>{{ session.name }}</h2>
             <p> {{ session.date }} {{ session.day }} at {{ session.time }} </p>
