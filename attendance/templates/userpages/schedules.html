@@ -6,7 +6,7 @@
         <a href="/sessions/{{session.id}}/{{session.type}}">
           <li id={{session.id}} type={{session.type}} >
             <h2>{{ session.name }}</h2>
-            <p> {{ session.day }} at {{ session.time }} </p>
+            <p> {{ session.date }} {{ session.day }} at {{ session.time }} </p>
             <p> {{ session.attendees|length }} people are attending </p>
           </li>
         </a>

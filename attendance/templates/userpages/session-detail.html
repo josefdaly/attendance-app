@@ -3,7 +3,7 @@
 {% block content %}
   <div id={{session.id}} type={{session.type}}>
     <h2>{{ session.name }}</h2>
-    <p> {{ session.day }} at {{ session.time }} </p>
+    <p> {{ session.date }} {{ session.day }} at {{ session.time }} </p>
     <p> {{ session.attendees|length }} people are attending </p>
   </div>
   <h3>Attendees</h3>
