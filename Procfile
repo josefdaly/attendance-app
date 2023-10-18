@@ -1,2 +1,2 @@
 release: ./release.sh
-web: gunicorn attandance:attendance.wsgi
+web: gunicorn attendance:attendance.wsgi
