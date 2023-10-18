@@ -1,2 +1,2 @@
-release: python manage.py migrate
+release: ./release.sh
 web: gunicorn attendance.wsgi
